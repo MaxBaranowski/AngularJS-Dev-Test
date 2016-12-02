@@ -1,0 +1,60 @@
+<div class="container">
+    <img src="" alt="photo">
+    <h3>{{$ctrl.items.name}}</h3>
+    <p>
+        <b>Phone:</b>
+        {{$ctrl.items.phone}}</p>
+    <p>
+        <b>City:</b>
+        {{$ctrl.items.address.city}}</p>
+    <div class="decription" style="clear: both;">
+        <h3>Address:</h3>
+        <table class="table table-bordered table-striped" style=" width: 100%; position: relative; margin: 0 auto;">
+            <thead>
+                <tr>
+                    <th>Street:
+                    </th>
+                    <th>Suite:
+                    </th>
+                    <th>City:
+                    </th>
+                    <th>Zip code:
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{$ctrl.items.address.street}}</td>
+                    <td>{{$ctrl.items.address.suite}}</td>
+                    <td>{{$ctrl.items.address.city}}</td>
+                    <td>{{$ctrl.items.address.zipcode}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Personal Information:</h3>
+        <table class="table table-bordered table-striped" style=" width: 100%; position: relative; margin: 0 auto;">
+            <thead>
+                <tr>
+                    <th>Phone:
+                    </th>
+                    <th>Website:
+                    </th>
+                    <th>Company:
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{$ctrl.items.phone}}</td>
+                    <td>{{$ctrl.items.website}}</td>
+                    <td>
+                        <b>Name:
+                        </b>
+                        {{$ctrl.items.company.name}}<br>
+                        <b>Bs:
+                        </b>{{$ctrl.items.company.bs}}<br></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
