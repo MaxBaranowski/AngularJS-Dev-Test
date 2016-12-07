@@ -1,59 +1,71 @@
 "use strict"
 
-app.controller('mainCtrl', function($scope, $http) {
+app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $uibModal) {
+
     $http.get("http://jsonplaceholder.typicode.com/users")
         .success(function(data) {
             $scope.data = data;
         })
+
 })
 
-app.controller('modalCtrl', function($scope, $uibModal, $log, $document, $cookies) {
-
-    $(document).ready(function() {
-        let check = $cookies.get('cookie');
-        if (check !== undefined) {
-            $ctrl.items = JSON.parse($cookies.get('cookie'));
-            $ctrl.open();
-            //cookie will live 5s
-            setTimeout(function() {
-                $cookies.remove('cookie');
-            }, 5000);
-        }
-    });
-
-    // // Retrieving a cookie
-    // $cookies.get('cookie');
-    // // Setting a cookie
-    // $cookies.put('cookie', 'oatmeal');
+app.controller('modalCtrl', function($http, $scope, $rootScope, $uibModal, $location) {
 
     var $ctrl = this;
     $ctrl.items;
-    $ctrl.add = function(person) {
-        $cookies.put('cookie', JSON.stringify(person));
-        $ctrl.items = JSON.parse($cookies.get('cookie'));
-        $ctrl.open();
-    }
 
-    //play animation when modal window appears
-    $ctrl.animationsEnabled = true;
+    $http.get("http://jsonplaceholder.typicode.com/users")
+        .success(function(data) {
+            $scope.data = data;
 
-    $ctrl.open = function(size, parentSelector) {
-        var modalInstance = $uibModal.open({
-            animation: $ctrl.animationsEnabled,
+            // declare functions
+            $ctrl.add = function(person) {
+                $ctrl.items = person;
+                $location.url('/detail/?' + person.id)
+                $ctrl.open();
 
-            templateUrl: './template/detail-view.html',
-            controller: 'ModalInstanceCtrl',
-            controllerAs: '$ctrl',
+            }
 
-            resolve: {
-                items: function() {
-                    return $ctrl.items;
+            //play animation when modal window appears
+            $ctrl.animationsEnabled = true;
+
+            $ctrl.open = function(size, parentSelector) {
+                var modalInstance = $uibModal.open({
+                    animation: $ctrl.animationsEnabled,
+
+                    templateUrl: './template/detail-view.html',
+                    controller: 'ModalInstanceCtrl',
+                    controllerAs: '$ctrl',
+                    resolve: {
+                        items: function() {
+                            return $ctrl.items;
+                        }
+                    }
+                });
+            }
+
+
+            var adr = $location.path();
+            adr = adr.slice(8);
+
+            var temp;
+            for (let i = 0; i < data.length; i++) {
+                for (let key in data[i]) {
+                    if (data[i].id == adr) {
+                        temp = data[i];
+                    }
                 }
             }
-        });
-    }
-});
 
+            if (adr > 0) {
+                $ctrl.items = temp;
+                $ctrl.open();
+            }
+
+
+
+        })
+});
 
 app.controller('ModalInstanceCtrl', function($uibModalInstance, items) {
     var $ctrl = this;
