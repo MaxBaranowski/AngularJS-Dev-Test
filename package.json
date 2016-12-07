@@ -8,8 +8,8 @@
   },
   "author": "max baranowski",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "browser-sync": "^2.18.2",
     "gulp": "^3.9.1"
-  },
+  }
 }
